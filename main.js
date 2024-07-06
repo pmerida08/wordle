@@ -85,7 +85,8 @@ const letterKeys = [
   "Borrar",
 ];
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", (event) => {
+  event.preventDefault();
   // Word To Guess
   const wordToGuess =
     wordsToGuess[Math.floor(Math.random() * wordsToGuess.length)];
@@ -155,13 +156,30 @@ const wordleBack = () => {
   const arrayToSend = [];
 
   const send = () => {
+    const contActual = document.querySelector(".actual");
+
+    contActual.lastElementChild.classList.remove("current");
     for (const element of Array.from(contActual.children)) {
       arrayToSend.push(element.textContent);
     }
-    console.log(arrayToSend);
+
+    if (contActual) {
+      contActual.classList.remove("actual");
+      contActual.nextElementSibling.classList.add("actual");
+      contActual.nextElementSibling.children[0].classList.add("current");
+    }
+
     console.log("Esto va a saltar una linea");
   };
   const remove = () => {
+    const contActual = document.querySelector(".actual");
+    const current = document.querySelector(".current");
+    current.textContent = "_";
+
+    if (current.previousElementSibling) {
+      current.classList.remove("current");
+    }
+    current.previousElementSibling.classList.add("current");
     console.log("Esto va a borrar una letra");
   };
 
@@ -179,11 +197,14 @@ const wordleBack = () => {
 
           default: // Escribe las letras
             const currentCase = document.querySelector(".current");
-            currentCase.textContent = event.target.textContent;
-
-            currentCase.classList.remove("current");
-            if (currentCase.nextElementSibling) {
-              currentCase.nextElementSibling.classList.add("current");
+            if (currentCase) {
+              currentCase.textContent = event.target.textContent;
+              currentCase.classList.remove("current");
+              if (currentCase.nextElementSibling) {
+                currentCase.nextElementSibling.classList.add("current");
+              } else {
+                currentCase.classList.add("current");
+              }
             }
             console.log(event.target.textContent);
             break;
