@@ -1,0 +1,82 @@
+* {
+  overflow-y: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Rubik", sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+/* toGuess */
+.wordle {
+  display: flex;
+  flex-direction: column;
+
+  align-content: center;
+  gap: 10px;
+  /* background-color: black; */
+  border-radius: 10%;
+}
+
+.container {
+  display: flex;
+  margin: 0 auto;
+  opacity: 0.5;
+}
+
+.actual {
+  opacity: 1;
+}
+
+.letter {
+  background-color: beige;
+  border-radius: 10px;
+  border: 5px solid black;
+  text-align: center;
+  margin: 10px;
+  padding: 20px;
+  font-size: x-large;
+}
+
+.current {
+  background-color: black;
+  color: beige;
+}
+
+/* keyboard */
+
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  margin: 70px auto;
+  gap: 10px;
+  max-width: fit-content;
+}
+
+.enviar {
+  grid-column: span 2;
+}
+
+.enviar {
+  background-color: greenyellow;
+}
+
+.borrar {
+  background-color: red;
+}
+
+.letterKey {
+  height: auto;
+  min-width: fit-content;
+  text-align: center;
+  border: 3px solid grey;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
