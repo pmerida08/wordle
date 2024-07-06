@@ -171,15 +171,16 @@ const wordleBack = () => {
 
     console.log("Esto va a saltar una linea");
   };
+  
   const remove = () => {
-    const contActual = document.querySelector(".actual");
     const current = document.querySelector(".current");
     current.textContent = "_";
 
     if (current.previousElementSibling) {
       current.classList.remove("current");
+      current.previousElementSibling.classList.add("current");
     }
-    current.previousElementSibling.classList.add("current");
+
     console.log("Esto va a borrar una letra");
   };
 
