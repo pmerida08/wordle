@@ -12,14 +12,17 @@ h1 {
   text-align: center;
 }
 
+h3 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
 /* toGuess */
 .wordle {
   display: flex;
   flex-direction: column;
-
   align-content: center;
   gap: 10px;
-  /* background-color: black; */
   border-radius: 10%;
 }
 
@@ -49,22 +52,49 @@ h1 {
   color: beige;
 }
 
+#correct {
+  background-color: chartreuse;
+  border-color: chartreuse;
+}
+
+#exists {
+  background-color: orange;
+  border-color: orange;
+}
+
+#incorrect {
+  background-color: grey;
+  border-color: grey;
+}
+
+h3#correct {
+  color: chartreuse;
+  border: none;
+  background: none;
+}
+
+h3#incorrect {
+  color: brown;
+  border: none;
+  background: none;
+}
+
 /* keyboard */
 
 .keyboard {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  margin: 70px auto;
   gap: 10px;
-  max-width: fit-content;
-}
-
-.enviar {
-  grid-column: span 2;
+  max-width: 90%;
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .enviar {
   background-color: greenyellow;
+  grid-column: span 2;
 }
 
 .borrar {

@@ -85,11 +85,13 @@ const letterKeys = [
   "Borrar",
 ];
 
+const wordToGuess =
+  wordsToGuess[Math.floor(Math.random() * wordsToGuess.length)];
+
+console.log(wordToGuess);
+
 document.addEventListener("DOMContentLoaded", (event) => {
   event.preventDefault();
-  // Word To Guess
-  const wordToGuess =
-    wordsToGuess[Math.floor(Math.random() * wordsToGuess.length)];
 
   const title = document.createElement("h1");
   title.innerHTML = "Wordle 2.0";
@@ -152,26 +154,67 @@ const wordleBack = () => {
     }
   }
 
-  // TODO: Acabar esto
-  const arrayToSend = [];
-
   const send = () => {
+    const arrayToSend = [];
     const contActual = document.querySelector(".actual");
+    const word = wordToGuess.toUpperCase().split("");
 
     contActual.lastElementChild.classList.remove("current");
+
     for (const element of Array.from(contActual.children)) {
       arrayToSend.push(element.textContent);
     }
 
-    if (contActual) {
-      contActual.classList.remove("actual");
-      contActual.nextElementSibling.classList.add("actual");
-      contActual.nextElementSibling.children[0].classList.add("current");
+    if (arrayToSend.includes("_")) {
+      // Comprueba que no se mande vacío
+      return;
     }
 
-    console.log("Esto va a saltar una linea");
+    console.log(arrayToSend);
+    console.log(word);
+
+    for (let i = 0; i < word.length; i++) {
+      const children = Array.from(contActual.children);
+
+      if (children[i].textContent === word[i]) {
+        children[i].id = "correct";
+      }
+    }
+
+    // Second pass to mark 'exists' and 'incorrect'
+    for (const element of Array.from(contActual.children)) {
+      if (element.id !== "correct") {
+        if (word.includes(element.textContent)) {
+          element.id = "exists";
+        } else {
+          element.id = "incorrect";
+        }
+      }
+    }
+
+    if (arrayToSend.every((val, index) => val === word[index])) {
+      const res = document.createElement("h3");
+      res.textContent = "¡has ganado!";
+      res.id = "correct";
+      document.querySelector(".wordle").appendChild(res);
+      return;
+    }
+
+    if (contActual) {
+      contActual.classList.remove("actual");
+      if (contActual.nextElementSibling) {
+        contActual.nextElementSibling.classList.add("actual");
+        contActual.nextElementSibling.children[0].classList.add("current");
+      } else {
+        const res = document.createElement("h3");
+        res.textContent = `has perdido...\n La palabra era: ${wordToGuess}`;
+        res.id = "incorrect";
+        document.querySelector(".wordle").appendChild(res);
+        return;
+      }
+    }
   };
-  
+
   const remove = () => {
     const current = document.querySelector(".current");
     current.textContent = "_";
@@ -180,8 +223,6 @@ const wordleBack = () => {
       current.classList.remove("current");
       current.previousElementSibling.classList.add("current");
     }
-
-    console.log("Esto va a borrar una letra");
   };
 
   const write = () => {
@@ -207,7 +248,6 @@ const wordleBack = () => {
                 currentCase.classList.add("current");
               }
             }
-            console.log(event.target.textContent);
             break;
         }
       });
