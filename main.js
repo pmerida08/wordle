@@ -155,9 +155,13 @@ const wordleBack = () => {
   }
 
   const send = () => {
+    const dictionary = "./sources/listado-general.txt";
     const arrayToSend = [];
     const contActual = document.querySelector(".actual");
     const word = wordToGuess.toUpperCase().split("");
+
+    const res = document.createElement("h3");
+    document.querySelector(".wordle").appendChild(res);
 
     contActual.lastElementChild.classList.remove("current");
 
@@ -170,49 +174,54 @@ const wordleBack = () => {
       return;
     }
 
-    console.log(arrayToSend);
     console.log(word);
 
-    for (let i = 0; i < word.length; i++) {
-      const children = Array.from(contActual.children);
-
-      if (children[i].textContent === word[i]) {
-        children[i].id = "correct";
-      }
-    }
-
-    // Second pass to mark 'exists' and 'incorrect'
     for (const element of Array.from(contActual.children)) {
-      if (element.id !== "correct") {
-        if (word.includes(element.textContent)) {
-          element.id = "exists";
-        } else {
-          element.id = "incorrect";
+      for (let i = 0; i < word.length; i++) {
+        const children = Array.from(contActual.children);
+
+        if (children[i].textContent === word[i]) {
+          children[i].id = "correct";
+        }
+
+        if (element.id !== "correct") {
+          if (word.includes(element.textContent)) {
+            element.id = "exists";
+          } else {
+            element.id = "incorrect";
+          }
         }
       }
     }
 
     if (arrayToSend.every((val, index) => val === word[index])) {
-      const res = document.createElement("h3");
-      res.textContent = "¡has ganado!";
-      res.id = "correct";
-      document.querySelector(".wordle").appendChild(res);
+      document.querySelector("h3").textContent = "¡has ganado!";
+      document.querySelector("h3").id = "correct";
       return;
     }
 
     if (contActual) {
       contActual.classList.remove("actual");
-      if (contActual.nextElementSibling) {
+      if (contActual.nextElementSibling.classList.contains("container")) {
         contActual.nextElementSibling.classList.add("actual");
         contActual.nextElementSibling.children[0].classList.add("current");
       } else {
-        const res = document.createElement("h3");
-        res.textContent = `has perdido...\n La palabra era: ${wordToGuess}`;
-        res.id = "incorrect";
-        document.querySelector(".wordle").appendChild(res);
+        document.querySelector("h3").textContent = `has perdido...\n La palabra era: ${wordToGuess}`;
+        document.querySelector("h3").id = "incorrect";
         return;
       }
     }
+
+    fetch(dictionary)
+      .then((response) => response.text())
+      .then((text) => {
+        if (text.includes(arrayToSend.join("").toLowerCase()) === false) {
+          document.querySelector("h3").textContent = "¡esa palabra no existe!";
+          res.id = "incorrect";
+          
+          return;
+        }
+      });
   };
 
   const remove = () => {
