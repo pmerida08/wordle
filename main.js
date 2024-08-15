@@ -1,267 +1,271 @@
 // Esqueleto
 
 const wordsToGuess = [
-  "perro",
-  "arroz",
-  "fruta",
-  "mango",
-  "piano",
-  "dulce",
-  "pluma",
-  "fresa",
-  "blusa",
-  "gatos",
-  "perro",
-  "niños",
-  "avión",
-  "flaco",
-  "traje",
-  "carta",
-  "dolar",
-  "rubio",
-  "pasto",
-  "huevo",
-  "brote",
-  "bosco",
-  "verde",
-  "flama",
-  "honda",
-  "roble",
-  "amigo",
-  "salsa",
-  "tigre",
-  "lugar",
-  "paseo",
-  "campo",
-  "guapo",
-  "cañón",
-  "golpe",
-  "llama",
-  "pizza",
-  "ronda",
-  "leche",
-  "reyes",
-  "nieve",
-  "nubes",
-  "queso",
-  "selva",
-  "bebés",
-  "grano",
-  "papas",
-  "marea",
-  "puños",
-  "cueva",
+    "perro",
+    "arroz",
+    "fruta",
+    "mango",
+    "piano",
+    "dulce",
+    "pluma",
+    "fresa",
+    "blusa",
+    "gatos",
+    "perro",
+    "niños",
+    "avión",
+    "flaco",
+    "traje",
+    "carta",
+    "dolar",
+    "rubio",
+    "pasto",
+    "huevo",
+    "brote",
+    "bosco",
+    "verde",
+    "flama",
+    "honda",
+    "roble",
+    "amigo",
+    "salsa",
+    "tigre",
+    "lugar",
+    "paseo",
+    "campo",
+    "guapo",
+    "cañón",
+    "golpe",
+    "llama",
+    "pizza",
+    "ronda",
+    "leche",
+    "reyes",
+    "nieve",
+    "nubes",
+    "queso",
+    "selva",
+    "bebés",
+    "grano",
+    "papas",
+    "marea",
+    "puños",
+    "cueva",
 ];
 
 const letterKeys = [
-  "Q",
-  "W",
-  "E",
-  "R",
-  "T",
-  "Y",
-  "U",
-  "I",
-  "O",
-  "P",
-  "A",
-  "S",
-  "D",
-  "F",
-  "G",
-  "H",
-  "J",
-  "K",
-  "L",
-  "Ñ",
-  "Enviar",
-  "Z",
-  "X",
-  "C",
-  "V",
-  "B",
-  "N",
-  "M",
-  "Borrar",
+    "Q",
+    "W",
+    "E",
+    "R",
+    "T",
+    "Y",
+    "U",
+    "I",
+    "O",
+    "P",
+    "A",
+    "S",
+    "D",
+    "F",
+    "G",
+    "H",
+    "J",
+    "K",
+    "L",
+    "Ñ",
+    "Enviar",
+    "Z",
+    "X",
+    "C",
+    "V",
+    "B",
+    "N",
+    "M",
+    "Borrar",
 ];
 
 const wordToGuess =
-  wordsToGuess[Math.floor(Math.random() * wordsToGuess.length)];
+    wordsToGuess[Math.floor(Math.random() * wordsToGuess.length)];
 
 console.log(wordToGuess);
 
 document.addEventListener("DOMContentLoaded", (event) => {
-  event.preventDefault();
+    event.preventDefault();
 
-  const title = document.createElement("h1");
-  title.innerHTML = "Wordle 2.0";
-  document.body.appendChild(title);
+    const title = document.createElement("h1");
+    title.innerHTML = "Wordle 2.0";
+    document.body.appendChild(title);
 
-  const wordle = document.createElement("div");
-  wordle.classList = "wordle";
-  document.body.appendChild(wordle);
+    const wordle = document.createElement("div");
+    wordle.classList = "wordle";
+    document.body.appendChild(wordle);
 
-  for (let attempts = 0; attempts < 5; attempts++) {
-    const attempt = document.createElement("div");
+    for (let attempts = 0; attempts < 5; attempts++) {
+        const attempt = document.createElement("div");
 
-    for (let i = 0; i < wordToGuess.length; i++) {
-      const letter = document.createElement("div");
-      letter.classList = "letter";
-      letter.textContent = "_"; // quitar
-      attempt.appendChild(letter);
-    }
-    attempt.classList = "container";
+        for (let i = 0; i < wordToGuess.length; i++) {
+            const letter = document.createElement("div");
+            letter.classList = "letter";
+            letter.textContent = "_"; // quitar
+            attempt.appendChild(letter);
+        }
+        attempt.classList = "container";
 
-    wordle.appendChild(attempt);
-  }
-
-  // Keyboard
-
-  const keyboard = document.createElement("div");
-  keyboard.classList = "keyboard";
-
-  letterKeys.forEach((key) => {
-    const keyElement = document.createElement("div");
-    keyElement.textContent = key;
-
-    switch (key) {
-      case "Enviar":
-        keyElement.classList = "letterKey enviar";
-        break;
-      case "Borrar":
-        keyElement.classList = "letterKey borrar";
-        break;
-      default:
-        keyElement.classList = "letterKey";
-        break;
+        wordle.appendChild(attempt);
     }
 
-    keyboard.appendChild(keyElement);
-  });
+    // Keyboard
 
-  document.body.appendChild(keyboard);
-  wordleBack();
+    const keyboard = document.createElement("div");
+    keyboard.classList = "keyboard";
+
+    letterKeys.forEach((key) => {
+        const keyElement = document.createElement("div");
+        keyElement.textContent = key;
+
+        switch (key) {
+            case "Enviar":
+                keyElement.classList = "letterKey enviar";
+                break;
+            case "Borrar":
+                keyElement.classList = "letterKey borrar";
+                break;
+            default:
+                keyElement.classList = "letterKey";
+                break;
+        }
+
+        keyboard.appendChild(keyElement);
+    });
+
+    document.body.appendChild(keyboard);
+    wordleBack();
 });
 
 const wordleBack = () => {
-  document.querySelector(".container").classList.add("actual");
-  const contActual = document.querySelector(".actual");
-
-  for (const element of Array.from(contActual.children)) {
-    if (element.textContent == "_") {
-      element.classList.add("current");
-      break;
-    }
-  }
-
-  const send = () => {
-    const dictionary = "./sources/listado-general.txt";
-    const arrayToSend = [];
+    document.querySelector(".container").classList.add("actual");
     const contActual = document.querySelector(".actual");
-    const word = wordToGuess.toUpperCase().split("");
-
-    const res = document.createElement("h3");
-    document.querySelector(".wordle").appendChild(res);
-
-    contActual.lastElementChild.classList.remove("current");
 
     for (const element of Array.from(contActual.children)) {
-      arrayToSend.push(element.textContent);
-    }
-
-    if (arrayToSend.includes("_")) {
-      // Comprueba que no se mande vacío
-      return;
-    }
-
-    console.log(word);
-
-    for (const element of Array.from(contActual.children)) {
-      for (let i = 0; i < word.length; i++) {
-        const children = Array.from(contActual.children);
-
-        if (children[i].textContent === word[i]) {
-          children[i].id = "correct";
-        }
-
-        if (element.id !== "correct") {
-          if (word.includes(element.textContent)) {
-            element.id = "exists";
-          } else {
-            element.id = "incorrect";
-          }
-        }
-      }
-    }
-
-    if (arrayToSend.every((val, index) => val === word[index])) {
-      document.querySelector("h3").textContent = "¡has ganado!";
-      document.querySelector("h3").id = "correct";
-      return;
-    }
-
-    if (contActual) {
-      contActual.classList.remove("actual");
-      if (contActual.nextElementSibling.classList.contains("container")) {
-        contActual.nextElementSibling.classList.add("actual");
-        contActual.nextElementSibling.children[0].classList.add("current");
-      } else {
-        document.querySelector("h3").textContent = `has perdido...\n La palabra era: ${wordToGuess}`;
-        document.querySelector("h3").id = "incorrect";
-        return;
-      }
-    }
-
-    fetch(dictionary)
-      .then((response) => response.text())
-      .then((text) => {
-        if (text.includes(arrayToSend.join("").toLowerCase()) === false) {
-          document.querySelector("h3").textContent = "¡esa palabra no existe!";
-          res.id = "incorrect";
-          
-          return;
-        }
-      });
-  };
-
-  const remove = () => {
-    const current = document.querySelector(".current");
-    current.textContent = "_";
-
-    if (current.previousElementSibling) {
-      current.classList.remove("current");
-      current.previousElementSibling.classList.add("current");
-    }
-  };
-
-  const write = () => {
-    document.querySelectorAll(".letterKey").forEach((element) => {
-      element.addEventListener("click", (event) => {
-        switch (event.target.textContent) {
-          case "Enviar":
-            send();
+        if (element.textContent == "_") {
+            element.classList.add("current");
             break;
+        }
+    }
 
-          case "Borrar":
-            remove();
-            break;
+    const send = () => {
+        const dictionary = "./sources/listado-general.txt";
+        const arrayToSend = [];
+        const contActual = document.querySelector(".actual");
+        const word = wordToGuess.toUpperCase().split("");
 
-          default: // Escribe las letras
-            const currentCase = document.querySelector(".current");
-            if (currentCase) {
-              currentCase.textContent = event.target.textContent;
-              currentCase.classList.remove("current");
-              if (currentCase.nextElementSibling) {
-                currentCase.nextElementSibling.classList.add("current");
-              } else {
-                currentCase.classList.add("current");
-              }
+        const res = document.createElement("h3");
+        document.querySelector(".wordle").appendChild(res);
+
+        contActual.lastElementChild.classList.remove("current");
+
+        for (const element of Array.from(contActual.children)) {
+            arrayToSend.push(element.textContent);
+        }
+
+        if (arrayToSend.includes("_")) {
+            // Comprueba que no se mande vacío
+            return;
+        }
+
+        console.log(word);
+
+        for (const element of Array.from(contActual.children)) {
+            for (let i = 0; i < word.length; i++) {
+                const children = Array.from(contActual.children);
+
+                if (children[i].textContent === word[i]) {
+                    children[i].id = "correct";
+                }
+
+                if (element.id !== "correct") {
+                    if (word.includes(element.textContent)) {
+                        element.id = "exists";
+                    } else {
+                        element.id = "incorrect";
+                    }
+                }
             }
-            break;
         }
-      });
-    });
-  };
 
-  write();
+        if (arrayToSend.every((val, index) => val === word[index])) {
+            document.querySelector("h3").textContent = "¡has ganado!";
+            document.querySelector("h3").id = "correct";
+            return;
+        }
+
+        const selectCurrent = (event) => {
+
+        }
+
+        if (contActual) {
+            contActual.classList.remove("actual");
+            if (contActual.nextElementSibling.classList.contains("container")) {
+                contActual.nextElementSibling.classList.add("actual");
+                contActual.nextElementSibling.children[0].classList.add("current");
+            } else {
+                document.querySelector("h3").textContent = `has perdido...\n La palabra era: ${wordToGuess}`;
+                document.querySelector("h3").id = "incorrect";
+                return;
+            }
+        }
+
+        fetch(dictionary)
+            .then((response) => response.text())
+            .then((text) => {
+                if (text.includes(arrayToSend.join("").toLowerCase()) === false) {
+                    document.querySelector("h3").textContent = "¡esa palabra no existe!";
+                    res.id = "incorrect";
+
+                    return;
+                }
+            });
+    };
+
+    const remove = () => {
+        const current = document.querySelector(".current");
+        current.textContent = "_";
+
+        if (current.previousElementSibling) {
+            current.classList.remove("current");
+            current.previousElementSibling.classList.add("current");
+        }
+    };
+
+    const write = () => {
+        document.querySelectorAll(".letterKey").forEach((element) => {
+            element.addEventListener("click", (event) => {
+                switch (event.target.textContent) {
+                    case "Enviar":
+                        send();
+                        break;
+
+                    case "Borrar":
+                        remove();
+                        break;
+
+                    default: // Escribe las letras
+                        const currentCase = document.querySelector(".current");
+                        if (currentCase) {
+                            currentCase.textContent = event.target.textContent;
+                            currentCase.classList.remove("current");
+                            if (currentCase.nextElementSibling) {
+                                currentCase.nextElementSibling.classList.add("current");
+                            } else {
+                                currentCase.classList.add("current");
+                            }
+                        }
+                        break;
+                }
+            });
+        });
+    };
+
+    write();
 };
